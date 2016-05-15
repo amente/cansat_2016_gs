@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SerialPortSimulator.cs" />
     <Compile Include="ConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,7 +83,7 @@
       <DependentUpon>ConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Container.cs" />
-    <Compile Include="SerialPortDataParser.cs" />
+    <Compile Include="XBee.cs" />
     <Compile Include="PayloadGraphForm.cs">
       <SubType>Form</SubType>
     </Compile>

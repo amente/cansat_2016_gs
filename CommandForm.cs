@@ -105,13 +105,13 @@ namespace CanSatGroundStation
         private void button1_Click(object sender, EventArgs e)
         {
 
-            if (!SerialPortDataParser.Instance.serialPortIsOPen())
+            if (!XBee.Instance.serialPortIsOPen())
             {
                  String PortName = this.comboBox1.SelectedItem.ToString();
                  int BaudRate = int.Parse(this.comboBox2.SelectedItem.ToString());
                 try
                 {                   
-                    SerialPortDataParser.Instance.openSerialPort(PortName, BaudRate);                  
+                    XBee.Instance.openSerialPort(PortName, BaudRate);                  
                     updateWidgets(true);
                 }
                 catch(Exception e1)
@@ -123,7 +123,7 @@ namespace CanSatGroundStation
             }            
             else
             {
-                SerialPortDataParser.Instance.closeSerialPort();               
+                XBee.Instance.closeSerialPort();               
                 updateWidgets(false);
             }
         }

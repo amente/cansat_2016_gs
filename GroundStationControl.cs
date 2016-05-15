@@ -22,8 +22,8 @@ namespace CanSatGroundStation
         public GroundStationControl()
         {
             InitializeComponent();
-            SerialPortDataParser.rawPacketAvailable += RawPacketAvailable;
-            SerialPortDataParser.validPacketAvailable += ValidPacketAvailable;
+            XBee.rawPacketAvailable += RawPacketAvailable;
+            XBee.validPacketAvailable += ValidPacketAvailable;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
