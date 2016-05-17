@@ -16,14 +16,19 @@ namespace CanSatGroundStation
     {
        
         static string[] comPorts;
-        
+        DataSimulatorForm dataSimulatorForm;
+
+        public static int RAW_DATA_MAX_BYTES_PER_LINE = 20;
+        private List<byte> rawDataByteBuffer = new List<byte>();
 
         public CommandForm()
         {
             InitializeComponent();
             refreshComPorts();
             this.comboBox2.Items.AddRange(new string[] { "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200", "230400" });
-            this.comboBox2.SelectedIndex = 3;            
+            this.comboBox2.SelectedIndex = 3;
+            dataSimulatorForm = new DataSimulatorForm();
+            dataSimulatorForm.Hide();  
         }
 
         private void refreshComPorts()
@@ -52,16 +57,19 @@ namespace CanSatGroundStation
         }
         
    
-        public void appendRawData(String data)
-        {      
-                           
+        public void appendRawData(byte rawByte)
+        {
+            rawDataByteBuffer.Add(rawByte);
+            if (rawDataByteBuffer.Count == RAW_DATA_MAX_BYTES_PER_LINE)
+            {
                 this.BeginInvoke(new EventHandler(delegate
                 {
-                    this.richTextBox1.AppendText(data);
+                    this.richTextBox1.AppendText(BitConverter.ToString(rawDataByteBuffer.ToArray()));
                     this.richTextBox1.AppendText("\n");
-                    this.label4.Text = (int.Parse(this.label4.Text) + data.Length).ToString();
-                })); 
-                                                  
+                    this.label4.Text = (int.Parse(this.label4.Text) + rawDataByteBuffer.Count).ToString();
+                    rawDataByteBuffer.Clear();
+                }));
+            }                                          
         }
 
         public void appendValidData(TelemetryPacket packet)
@@ -113,6 +121,7 @@ namespace CanSatGroundStation
                 {                   
                     XBee.Instance.openSerialPort(PortName, BaudRate);                  
                     updateWidgets(true);
+                    abortSimulator();
                 }
                 catch(Exception e1)
                 {
@@ -139,12 +148,13 @@ namespace CanSatGroundStation
         }
 
         //Update the widget according to the state of the serial port
-        private void updateWidgets(Boolean state)
+        private void updateWidgets(Boolean serialPortIsConnected)
         {
-            this.button1.Text = state ? "Disconnet" : "Connect";
-            this.comboBox1.Enabled = !state;
-            this.comboBox2.Enabled = !state;
-            this.button2.Enabled = !state;            
+            this.button1.Text = serialPortIsConnected ? "Disconnet" : "Connect";
+            this.comboBox1.Enabled = !serialPortIsConnected;
+            this.comboBox2.Enabled = !serialPortIsConnected;
+            this.button2.Enabled = !serialPortIsConnected;          
+            this.checkBox2.Enabled = !serialPortIsConnected;           
         }
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
@@ -164,6 +174,43 @@ namespace CanSatGroundStation
         private void tlpTelemetry_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox senderCheckBox = sender as CheckBox;
+            if(senderCheckBox.Checked)
+            {
+                this.comboBox1.Enabled = false;
+                this.comboBox2.Enabled = false;
+                this.button2.Enabled = false;
+                startSimulator();
+                showDataSimulatorForm();
+            }
+            else
+            {
+                this.comboBox1.Enabled = true;
+                this.comboBox2.Enabled = true;
+                this.button2.Enabled = true;
+                abortSimulator();
+                dataSimulatorForm.Hide();
+            }
+        }
+
+        private void showDataSimulatorForm()
+        {
+            dataSimulatorForm.Show();
+            dataSimulatorForm.BringToFront();
+        }
+
+        private void startSimulator()
+        {
+            SerialPortSimulator.Instance.start();
+        }
+
+        private void abortSimulator()
+        {
+            SerialPortSimulator.Instance.abort();
         }
     }
 }

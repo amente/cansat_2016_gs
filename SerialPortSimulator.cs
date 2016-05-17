@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,10 +10,25 @@ namespace CanSatGroundStation
     class SerialPortSimulator
     {
         private int numBytesToRead = -1;
-        private static byte[] data;
+        private static byte[] data = new byte[0];
         private int byteReadIndex = 0;
-        private Thread simulatorThread = new Thread(Simulate);
+        private Thread simulatorThread;
+        private static volatile SerialPortSimulator simulatorInstance;
+        private Boolean simulaterThreadIsRunning = false;
+        private static Boolean simulationStarted = false;
+        private static int intervalMs = 1000;
 
+        public static SerialPortSimulator Instance
+        {
+            get
+            {
+                if (simulatorInstance == null)
+                {
+                    simulatorInstance = new SerialPortSimulator();
+                }
+                return simulatorInstance;
+            }
+        }
 
         public int BytesToRead
         {
@@ -48,24 +64,72 @@ namespace CanSatGroundStation
 
         public void start()
         {
-            simulatorThread.Start();
+            if (!simulaterThreadIsRunning)
+            {
+                try
+                {
+                    simulatorThread = new Thread(SimulateIntervalMs);
+                    simulatorThread.Start();
+                    simulaterThreadIsRunning = true;
+                }
+                catch (ThreadAbortException e)
+                {
+                    //It is ok to abort
+                    Debug.WriteLine("SerialPortSimulator simulator aborted.");
+                }
+            }
         }
 
         public void abort()
         {
-            simulatorThread.Abort();
+            if (simulatorThread != null && simulaterThreadIsRunning)
+            {
+                simulatorThread.Abort();
+                simulaterThreadIsRunning = false;
+            }
         }
 
-        private static void Simulate()
+        public static int SimulationIntevalMS
         {
+            get
+            {
+                return intervalMs; ;
+            }
+            set
+            {
+                intervalMs = value;
+            }
+        }
+
+
+        public static Boolean SimulationStarted
+        {
+            get
+            {
+                return simulationStarted;
+            }
+
+            set
+            {
+                simulationStarted = value;
+            }
+        }
+
+        public static void SimulateIntervalMs()
+        {
+
             while(true)
             {
-                foreach(byte b in Data)
+                if (simulationStarted)
                 {
-                    XBee.IncomingByteHandler(b);
-                    Thread.Sleep(5);
+                    Debug.WriteLine(BitConverter.ToString(Data));
+                    foreach (byte b in Data)
+                    {
+                        XBee.IncomingByteHandler(b);
+                        Thread.Sleep(5);
+                    }
+                    Thread.Sleep(intervalMs);
                 }
-                Thread.Sleep(1000);
             }
         }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
+using System.Diagnostics;
 
 namespace CanSatGroundStation
 {
@@ -15,15 +16,17 @@ namespace CanSatGroundStation
        
         PayloadGraphForm payloadGraphForm;       
         DataTableForm payloadTableForm;
-        CommandForm telemetryForm;
+        CommandForm commandForm;
         ConfigForm configForm;
         StatusForm statusForm;
+        
 
         public GroundStationControl()
         {
             InitializeComponent();
-            XBee.rawPacketAvailable += RawPacketAvailable;
-            XBee.validPacketAvailable += ValidPacketAvailable;
+
+            XBee.xbeeRawByteAvaialbleHandler += RawByteAvialableHandler;
+            XBee.xbeeIncomingPacketAvaialbleHandler += IncomingPacketAvaialble;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -35,34 +38,39 @@ namespace CanSatGroundStation
             payloadGraphForm.Show();
             payloadTableForm.Show();
 
-            telemetryForm = new CommandForm();         
-            telemetryForm.Show();
+            commandForm = new CommandForm();         
+            commandForm.Show();
 
             configForm = new ConfigForm();
             statusForm = new StatusForm();
             statusForm.Show();
         }
-
-        private void RawPacketAvailable(String data)
+               
+        private void RawByteAvialableHandler(byte rawByte)
         {
-            telemetryForm.appendRawData(data);            
-            Logger.Instance.logRaw(data);
+            commandForm.appendRawData(rawByte);
+            Logger.Instance.logRawByte(rawByte);
         }
-       
+
         private void ValidPacketAvailable(TelemetryPacket packet)
         {
-           payloadTableForm.AddData(packet.toArray());
-           payloadGraphForm.addPacket(packet);
-           statusForm.setPayloadData(packet);                
+           //payloadTableForm.AddData(packet.toArray());
+           //payloadGraphForm.addPacket(packet);
+           //statusForm.setPayloadData(packet);                
            
 
-            telemetryForm.appendValidData(packet);
-            Logger.Instance.logValid(packet);
+            //telemetryForm.appendValidData(packet);
+           //Logger.Instance.logValid(packet);
+        }
+
+        private void IncomingPacketAvaialble(XBeeIncomingPacket packet)
+        {
+            //Debug.WriteLine("Incoming Packet Frame Type: " + packet.FrameType.ToString());
         }
 
         private void mnuTelemetry_Click(object sender, EventArgs e)
         {
-            telemetryForm.Show();
+            commandForm.Show();
         }
         private void mnuDataGraphs_Click(object sender, EventArgs e)
         {
@@ -75,8 +83,8 @@ namespace CanSatGroundStation
 
         private void btnTelemetry_Click(object sender, EventArgs e)
         {
-            telemetryForm.Show();
-            telemetryForm.BringToFront();
+            commandForm.Show();
+            commandForm.BringToFront();
         }
 
         private void btnGraphs_Click(object sender, EventArgs e)

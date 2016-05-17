@@ -45,6 +45,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.grpTelemetry.SuspendLayout();
             this.tlpTelemetry.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -58,7 +59,7 @@
             this.grpTelemetry.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpTelemetry.Location = new System.Drawing.Point(0, 0);
             this.grpTelemetry.Name = "grpTelemetry";
-            this.grpTelemetry.Size = new System.Drawing.Size(677, 423);
+            this.grpTelemetry.Size = new System.Drawing.Size(719, 423);
             this.grpTelemetry.TabIndex = 5;
             this.grpTelemetry.TabStop = false;
             this.grpTelemetry.Text = "Telemetry";
@@ -89,7 +90,7 @@
             this.tlpTelemetry.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpTelemetry.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tlpTelemetry.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tlpTelemetry.Size = new System.Drawing.Size(671, 404);
+            this.tlpTelemetry.Size = new System.Drawing.Size(713, 404);
             this.tlpTelemetry.TabIndex = 1;
             this.tlpTelemetry.Paint += new System.Windows.Forms.PaintEventHandler(this.tlpTelemetry_Paint);
             // 
@@ -97,7 +98,7 @@
             // 
             this.rtbValidPacket.BackColor = System.Drawing.Color.White;
             this.rtbValidPacket.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbValidPacket.Location = new System.Drawing.Point(371, 39);
+            this.rtbValidPacket.Location = new System.Drawing.Point(413, 39);
             this.rtbValidPacket.Name = "rtbValidPacket";
             this.rtbValidPacket.ReadOnly = true;
             this.rtbValidPacket.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
@@ -122,7 +123,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(368, 22);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(410, 22);
             this.tableLayoutPanel3.TabIndex = 15;
             // 
             // label4
@@ -130,7 +131,7 @@
             this.label4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(351, 3);
+            this.label4.Location = new System.Drawing.Point(393, 3);
             this.label4.Name = "label4";
             this.label4.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.label4.Size = new System.Drawing.Size(14, 15);
@@ -142,7 +143,7 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(201, 3);
+            this.label3.Location = new System.Drawing.Point(243, 3);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 15);
@@ -171,7 +172,7 @@
             this.panel1.Controls.Add(this.comboBox1);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(362, 30);
+            this.panel1.Size = new System.Drawing.Size(404, 30);
             this.panel1.TabIndex = 14;
             // 
             // label2
@@ -243,11 +244,12 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.checkBox2);
             this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.button3);
-            this.panel2.Location = new System.Drawing.Point(371, 3);
+            this.panel2.Location = new System.Drawing.Point(413, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(289, 30);
+            this.panel2.Size = new System.Drawing.Size(297, 30);
             this.panel2.TabIndex = 17;
             // 
             // button2
@@ -273,11 +275,22 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(206, 5);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(91, 17);
+            this.checkBox2.TabIndex = 20;
+            this.checkBox2.Text = "Use Simulator";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
             // CommandForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(677, 423);
+            this.ClientSize = new System.Drawing.Size(719, 423);
             this.Controls.Add(this.grpTelemetry);
             this.MinimumSize = new System.Drawing.Size(466, 200);
             this.Name = "CommandForm";
@@ -291,6 +304,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -314,6 +328,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.RichTextBox rtbValidPacket;
-
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }

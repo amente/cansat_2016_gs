@@ -75,6 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PacketParser.cs" />
+    <Compile Include="DataSimulatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataSimulatorForm.Designer.cs">
+      <DependentUpon>DataSimulatorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SerialPortSimulator.cs" />
     <Compile Include="ConfigForm.cs">
       <SubType>Form</SubType>
@@ -126,6 +133,9 @@
     </Compile>
     <EmbeddedResource Include="ConfigForm.resx">
       <DependentUpon>ConfigForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataSimulatorForm.resx">
+      <DependentUpon>DataSimulatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PayloadGraphForm.resx">
       <DependentUpon>PayloadGraphForm.cs</DependentUpon>

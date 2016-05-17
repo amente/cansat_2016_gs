@@ -18,11 +18,14 @@ namespace CanSatGroundStation
         public static string VALID_LOG_FILE_NAME = "cansat_valid_log.txt";
         public static string RAW_LOG_FILE_NAME = "cansat_raw_log.txt";
 
+        public static int RAW_LOG_MAX_BYTES_PER_LINE = 20;
+
         private static Logger logger;
         // Used to indicate first instance of a log operation so as include the data and time per session
         private bool appendedTimeToRaw = false; 
         private bool appendedTimeToValid = false;
         private String logDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        private List<byte> rawLogByteBuffer = new List<byte>();
 
 
         private Logger(){}
@@ -39,6 +42,15 @@ namespace CanSatGroundStation
             }
         }
         
+        public void logRawByte(byte rawByte)
+        {
+            rawLogByteBuffer.Add(rawByte);
+            if(rawLogByteBuffer.Count == RAW_LOG_MAX_BYTES_PER_LINE)
+            {
+                logRaw(BitConverter.ToString(rawLogByteBuffer.ToArray()));
+                rawLogByteBuffer.Clear();
+            }
+        }
 
         public void logRaw(String data)
         {
