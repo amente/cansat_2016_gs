@@ -18,6 +18,7 @@ namespace CanSatGroundStation
 
         public void addPacket(TelemetryPacket packet)
         {
+            /*
             rtgTemp.AddDataPoint(packet.temperature);            
             rtgAlt.AddDataPoint(packet.altitude);           
             rtgBat.AddDataPoint(packet.batVoltage);            
@@ -34,7 +35,7 @@ namespace CanSatGroundStation
                 lblAlt.Text = packet.altitude.ToString("F1");
                 lblVolt.Text = packet.batVoltage.ToString();
                 lblLux.Text = packet.lux.ToString();
-            });            
+            });     */       
         }
 
         private void DataGraphForm_FormClosing(object sender, FormClosingEventArgs e)

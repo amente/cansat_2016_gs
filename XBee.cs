@@ -8,12 +8,8 @@ namespace CanSatGroundStation
 {
     // Delegate methods to be notified for events
 
-    public delegate void XBeeIncomingPacketAvailable(XBeeIncomingPacket packet);
-    public delegate void TelemetryDataAvailableHandler(TelemetryPacket packet);
+    public delegate void XBeeIncomingPacketAvailableHandler(XBeeIncomingPacket packet);
     public delegate void XBeeRawByteAvailableHandler(byte rawByte);
-
-
-   
 
     public class XBeeIncomingPacket
     {
@@ -85,31 +81,50 @@ namespace CanSatGroundStation
             //TODO:
         }
        
+
         public static byte[] createIncomingRecievePacket(byte[] packetData)
         {
-            byte[] recievePacket = new byte[16 + packetData.Length];
+            byte[] sourceAddress64Bit = new byte[8];
+            byte[] sourceAddress16Bit = new byte[2];
+            byte receiveOption = 0x41;
+
+            return createIncomingRecievePacket(packetData, sourceAddress64Bit , sourceAddress16Bit, receiveOption);
+        }
+
+        public static byte[] createIncomingRecievePacket(byte[] packetData, byte[] sourceAddress64Bit, byte[] sourceAddress16Bit, byte receiveOption)
+        {
+            int dataLengthWithSourceAddressAndOption = packetData.Length + sourceAddress64Bit.Length + sourceAddress16Bit.Length + 1;
+            byte[] recievePacket = new byte[4 + dataLengthWithSourceAddressAndOption]; // 1 byte start delimiter + 2 byte length + 1 byte checksum = 4
+
+            int writeOffset = 0;
 
             //Start delimiter
-            recievePacket[0] =  XBee.XBEE_PACKET_START_DELIMITER;
+            recievePacket[writeOffset] =  XBee.XBEE_PACKET_START_DELIMITER;
+            writeOffset ++;
 
             //Length bytes between, length field and checksum
-            int length = 12 + packetData.Length;
-            recievePacket[1] = (byte)(length >> 8); //MSB
-            recievePacket[2] = (byte)(length & 0x00FF); //LSB
+            int length = dataLengthWithSourceAddressAndOption;
+            recievePacket[writeOffset] = (byte)(length >> 8); //MSB
+            writeOffset ++;
+            recievePacket[writeOffset] = (byte)(length & 0x00FF); //LSB
+            writeOffset ++;
 
             //Frame type
-            recievePacket[3] = RECIEVE_PACKET_FRAME_TYPE;
+            recievePacket[writeOffset] = RECIEVE_PACKET_FRAME_TYPE;
 
-            //Next 8 bytes are 64 bit source address, leave empty
+            //TODO:Next 8 bytes are 64 bit source address, leave empty
+            writeOffset += sourceAddress64Bit.Length;
 
-            //Next 2 bytes are 16 bit source address, leave empty
+            //TODO:Next 2 bytes are 16 bit source address, leave empty
+            writeOffset += sourceAddress16Bit.Length;
 
             //Next 1 byte is recieve option
-            recievePacket[14] = 0x41;
+            recievePacket[writeOffset] = receiveOption;
+            writeOffset++;
 
             for(int i=0;  i < packetData.Length; i++)
             {
-                recievePacket[i + 15] = packetData[i];
+                recievePacket[i + writeOffset] = packetData[i];
             }
 
             //TODO: Leave checksum byte empty 
@@ -142,7 +157,7 @@ namespace CanSatGroundStation
         public const byte XBEE_PACKET_START_DELIMITER = 0x7E;
         private static int INCOMING_PACKET_BUFFER_SIZE = 200;
 
-        public static event XBeeIncomingPacketAvailable xbeeIncomingPacketAvaialbleHandler;
+        public static event XBeeIncomingPacketAvailableHandler xbeeIncomingPacketAvaialbleHandler;
         public static event XBeeRawByteAvailableHandler xbeeRawByteAvaialbleHandler;
 
         private static byte[] incomingPacketBuffer = new byte[INCOMING_PACKET_BUFFER_SIZE];

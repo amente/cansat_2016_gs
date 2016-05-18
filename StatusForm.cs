@@ -31,10 +31,11 @@ namespace CanSatGroundStation
         {
             this.Invoke((MethodInvoker)delegate
             {
+                /* TODO:
                 lblPayloadVolt.Text = packet.batVoltage.ToString();
                 lblPaloadAlt.Text = packet.altitude.ToString("F1");
                 lblPayloadTmp.Text = packet.temperature.ToString("F1");
-                lblPayloadTime.Text = packet.missionTime.ToString();
+                lblPayloadTime.Text = packet.missionTime.ToString(); */
 
             });
            
@@ -44,9 +45,9 @@ namespace CanSatGroundStation
         {
             this.Invoke((MethodInvoker)delegate
             {
-                
+                /* TODO:
                 setPayloadDeployed(packet.payloadDeployed);
-                setUmbrellaDeployed(packet.umbrellaDeployed);
+                setUmbrellaDeployed(packet.umbrellaDeployed); */
 
             });            
         }

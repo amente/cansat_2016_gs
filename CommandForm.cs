@@ -75,24 +75,7 @@ namespace CanSatGroundStation
         public void appendValidData(TelemetryPacket packet)
         {
 
-            this.BeginInvoke(new EventHandler(delegate
-            {
-                if (packet.isFromPayload())
-                {
-                    
-                    String s = packet.toString();     
-                    rtbValidPacket.SelectionColor = Color.Blue;
-                    rtbValidPacket.AppendText(s);
-                    rtbValidPacket.AppendText("\n");                    
-                }
-                else
-                {
-                    String s = packet.toString();
-                    rtbValidPacket.SelectionColor = Color.Orange;
-                    rtbValidPacket.AppendText(s);
-                    rtbValidPacket.AppendText("\n");                   
-                }
-            }));
+            //TODO:
 
         }
        
