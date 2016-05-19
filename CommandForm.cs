@@ -59,17 +59,18 @@ namespace CanSatGroundStation
    
         public void appendRawData(byte rawByte)
         {
-            rawDataByteBuffer.Add(rawByte);
+           /* rawDataByteBuffer.Add(rawByte);
             if (rawDataByteBuffer.Count == RAW_DATA_MAX_BYTES_PER_LINE)
             {
                 this.BeginInvoke(new EventHandler(delegate
                 {
+                    rawDataByteBuffer.ToArray();
                     this.richTextBox1.AppendText(BitConverter.ToString(rawDataByteBuffer.ToArray()));
                     this.richTextBox1.AppendText("\n");
                     this.label4.Text = (int.Parse(this.label4.Text) + rawDataByteBuffer.Count).ToString();
                     rawDataByteBuffer.Clear();
                 }));
-            }                                          
+            }         */                                 
         }
 
         public void appendValidData(TelemetryPacket packet)

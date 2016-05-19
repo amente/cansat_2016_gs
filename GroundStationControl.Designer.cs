@@ -41,7 +41,7 @@
             this.btnStatus = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelRemainingImageBytes = new System.Windows.Forms.Label();
             this.stsStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -153,14 +153,14 @@
             this.label1.TabIndex = 16;
             this.label1.Text = "Remaining Picture Bytes:";
             // 
-            // label2
+            // labelRemainingImageBytes
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(799, 72);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "0";
+            this.labelRemainingImageBytes.AutoSize = true;
+            this.labelRemainingImageBytes.Location = new System.Drawing.Point(799, 72);
+            this.labelRemainingImageBytes.Name = "labelRemainingImageBytes";
+            this.labelRemainingImageBytes.Size = new System.Drawing.Size(13, 13);
+            this.labelRemainingImageBytes.TabIndex = 17;
+            this.labelRemainingImageBytes.Text = "0";
             // 
             // GroundStationControl
             // 
@@ -168,7 +168,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(858, 596);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelRemainingImageBytes);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnStatus);
@@ -206,7 +206,7 @@
         private System.Windows.Forms.Button btnStatus;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelRemainingImageBytes;
     }
 }
 

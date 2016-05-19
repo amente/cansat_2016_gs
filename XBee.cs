@@ -74,6 +74,11 @@ namespace CanSatGroundStation
             {
                 packetData[bytePos] = byteValue;
             }
+            else
+            {
+                Debug.WriteLine("Error setting packet data byte: bytePos: " + 
+                    bytePos + " is out of bound. packetData length:  " + packetData.Length);
+            }
         }
 
         public void verifyChecksum(byte checksumByte)
@@ -94,7 +99,7 @@ namespace CanSatGroundStation
         public static byte[] createIncomingRecievePacket(byte[] packetData, byte[] sourceAddress64Bit, byte[] sourceAddress16Bit, byte receiveOption)
         {
             int dataLengthWithSourceAddressAndOption = packetData.Length + sourceAddress64Bit.Length + sourceAddress16Bit.Length + 1;
-            byte[] recievePacket = new byte[4 + dataLengthWithSourceAddressAndOption]; // 1 byte start delimiter + 2 byte length + 1 byte checksum = 4
+            byte[] recievePacket = new byte[5 + dataLengthWithSourceAddressAndOption]; // 1 byte start delimiter + 2 byte length + 1 byte frame type + 1 byte checksum = 5
 
             int writeOffset = 0;
 
@@ -103,7 +108,7 @@ namespace CanSatGroundStation
             writeOffset ++;
 
             //Length bytes between, length field and checksum
-            int length = dataLengthWithSourceAddressAndOption;
+            int length = dataLengthWithSourceAddressAndOption + 1; // Include the frame type;
             recievePacket[writeOffset] = (byte)(length >> 8); //MSB
             writeOffset ++;
             recievePacket[writeOffset] = (byte)(length & 0x00FF); //LSB
@@ -111,6 +116,7 @@ namespace CanSatGroundStation
 
             //Frame type
             recievePacket[writeOffset] = RECIEVE_PACKET_FRAME_TYPE;
+            writeOffset++;
 
             //TODO:Next 8 bytes are 64 bit source address, leave empty
             writeOffset += sourceAddress64Bit.Length;
@@ -203,7 +209,7 @@ namespace CanSatGroundStation
                     //Debug.WriteLine("Parsing Frame Type byte: " + incomingByte.ToString("X2"));
                     incomingPacket.FrameType = XBeeIncomingPacket.toFrameType(incomingByte);
                 }
-                else if((incomingPacketFrameIndex - 3) <= incomingPacket.PacketDataLength)
+                else if((incomingPacketFrameIndex - 4) < incomingPacket.PacketDataLength)
                 {
                     //Debug.WriteLine("Parsing Packet Data Byte: " + incomingByte.ToString("X2"));
                     incomingPacket.setPacketDataByte(incomingByte, incomingPacketFrameIndex - 4);

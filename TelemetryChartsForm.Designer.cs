@@ -1,6 +1,6 @@
 ﻿namespace CanSatGroundStation
 {
-    partial class PayloadGraphForm
+    partial class TelemetryChartsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,24 +31,24 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.lblTmp = new System.Windows.Forms.Label();
+            this.lblTemperature = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.rtgTemp = new CanSatGroundStation.RealTimeGraph();
+            this.rtgTemperature = new CanSatGroundStation.RealTimeGraph();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
-            this.lblAlt = new System.Windows.Forms.Label();
+            this.lblAltitude = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.rtgAlt = new CanSatGroundStation.RealTimeGraph();
+            this.rtgAltitude = new CanSatGroundStation.RealTimeGraph();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.lblVolt = new System.Windows.Forms.Label();
+            this.lblSourceVoltage = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.rtgBat = new CanSatGroundStation.RealTimeGraph();
+            this.rtgSourceVoltage = new CanSatGroundStation.RealTimeGraph();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.lblLux = new System.Windows.Forms.Label();
+            this.lblAirSpeed = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.rtgLux = new CanSatGroundStation.RealTimeGraph();
+            this.rtgAirSpeed = new CanSatGroundStation.RealTimeGraph();
             this.panel6 = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -67,9 +67,9 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.lblTmp);
+            this.panel2.Controls.Add(this.lblTemperature);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.rtgTemp);
+            this.panel2.Controls.Add(this.rtgTemperature);
             this.panel2.Location = new System.Drawing.Point(443, 321);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(334, 166);
@@ -86,16 +86,16 @@
             this.label8.TabIndex = 3;
             this.label8.Text = "°c";
             // 
-            // lblTmp
+            // lblTemperature
             // 
-            this.lblTmp.AutoSize = true;
-            this.lblTmp.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTmp.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lblTmp.Location = new System.Drawing.Point(223, 7);
-            this.lblTmp.Name = "lblTmp";
-            this.lblTmp.Size = new System.Drawing.Size(60, 26);
-            this.lblTmp.TabIndex = 2;
-            this.lblTmp.Text = "00.0 ";
+            this.lblTemperature.AutoSize = true;
+            this.lblTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTemperature.ForeColor = System.Drawing.Color.GreenYellow;
+            this.lblTemperature.Location = new System.Drawing.Point(223, 7);
+            this.lblTemperature.Name = "lblTemperature";
+            this.lblTemperature.Size = new System.Drawing.Size(60, 26);
+            this.lblTemperature.TabIndex = 2;
+            this.lblTemperature.Text = "00.0 ";
             // 
             // label1
             // 
@@ -110,23 +110,23 @@
             // 
             // rtgTemp
             // 
-            this.rtgTemp.BackColor = System.Drawing.Color.Black;
-            this.rtgTemp.ForeColor = System.Drawing.Color.White;
-            this.rtgTemp.Location = new System.Drawing.Point(19, 30);
-            this.rtgTemp.Name = "rtgTemp";
-            this.rtgTemp.numXLables = 4;
-            this.rtgTemp.numYLables = 5;
-            this.rtgTemp.Size = new System.Drawing.Size(317, 121);
-            this.rtgTemp.TabIndex = 0;
-            this.rtgTemp.YMaximum = 100D;
-            this.rtgTemp.YMinimum = 0D;
+            this.rtgTemperature.BackColor = System.Drawing.Color.Black;
+            this.rtgTemperature.ForeColor = System.Drawing.Color.White;
+            this.rtgTemperature.Location = new System.Drawing.Point(19, 30);
+            this.rtgTemperature.Name = "rtgTemp";
+            this.rtgTemperature.numXLables = 4;
+            this.rtgTemperature.numYLables = 5;
+            this.rtgTemperature.Size = new System.Drawing.Size(317, 121);
+            this.rtgTemperature.TabIndex = 0;
+            this.rtgTemperature.YMaximum = 100D;
+            this.rtgTemperature.YMinimum = 0D;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.lblAlt);
+            this.panel3.Controls.Add(this.lblAltitude);
             this.panel3.Controls.Add(this.label2);
-            this.panel3.Controls.Add(this.rtgAlt);
+            this.panel3.Controls.Add(this.rtgAltitude);
             this.panel3.Location = new System.Drawing.Point(15, 23);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(411, 464);
@@ -143,16 +143,16 @@
             this.label9.TabIndex = 4;
             this.label9.Text = "m";
             // 
-            // lblAlt
+            // lblAltitude
             // 
-            this.lblAlt.AutoSize = true;
-            this.lblAlt.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAlt.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lblAlt.Location = new System.Drawing.Point(214, 5);
-            this.lblAlt.Name = "lblAlt";
-            this.lblAlt.Size = new System.Drawing.Size(66, 26);
-            this.lblAlt.TabIndex = 3;
-            this.lblAlt.Text = "000.0";
+            this.lblAltitude.AutoSize = true;
+            this.lblAltitude.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAltitude.ForeColor = System.Drawing.Color.GreenYellow;
+            this.lblAltitude.Location = new System.Drawing.Point(214, 5);
+            this.lblAltitude.Name = "lblAltitude";
+            this.lblAltitude.Size = new System.Drawing.Size(66, 26);
+            this.lblAltitude.TabIndex = 3;
+            this.lblAltitude.Text = "000.0";
             // 
             // label2
             // 
@@ -167,23 +167,23 @@
             // 
             // rtgAlt
             // 
-            this.rtgAlt.BackColor = System.Drawing.Color.Black;
-            this.rtgAlt.ForeColor = System.Drawing.Color.White;
-            this.rtgAlt.Location = new System.Drawing.Point(0, 30);
-            this.rtgAlt.Name = "rtgAlt";
-            this.rtgAlt.numXLables = 4;
-            this.rtgAlt.numYLables = 11;
-            this.rtgAlt.Size = new System.Drawing.Size(411, 434);
-            this.rtgAlt.TabIndex = 1;
-            this.rtgAlt.YMaximum = 1000D;
-            this.rtgAlt.YMinimum = 0D;
+            this.rtgAltitude.BackColor = System.Drawing.Color.Black;
+            this.rtgAltitude.ForeColor = System.Drawing.Color.White;
+            this.rtgAltitude.Location = new System.Drawing.Point(0, 30);
+            this.rtgAltitude.Name = "rtgAlt";
+            this.rtgAltitude.numXLables = 4;
+            this.rtgAltitude.numYLables = 11;
+            this.rtgAltitude.Size = new System.Drawing.Size(411, 434);
+            this.rtgAltitude.TabIndex = 1;
+            this.rtgAltitude.YMaximum = 1000D;
+            this.rtgAltitude.YMinimum = 0D;
             // 
             // panel4
             // 
             this.panel4.Controls.Add(this.label12);
-            this.panel4.Controls.Add(this.lblVolt);
+            this.panel4.Controls.Add(this.lblSourceVoltage);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.rtgBat);
+            this.panel4.Controls.Add(this.rtgSourceVoltage);
             this.panel4.Location = new System.Drawing.Point(443, 171);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(338, 145);
@@ -200,16 +200,16 @@
             this.label12.TabIndex = 6;
             this.label12.Text = "mv";
             // 
-            // lblVolt
+            // lblSourceVoltage
             // 
-            this.lblVolt.AutoSize = true;
-            this.lblVolt.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblVolt.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lblVolt.Location = new System.Drawing.Point(198, 9);
-            this.lblVolt.Name = "lblVolt";
-            this.lblVolt.Size = new System.Drawing.Size(60, 26);
-            this.lblVolt.TabIndex = 5;
-            this.lblVolt.Text = "0000";
+            this.lblSourceVoltage.AutoSize = true;
+            this.lblSourceVoltage.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSourceVoltage.ForeColor = System.Drawing.Color.GreenYellow;
+            this.lblSourceVoltage.Location = new System.Drawing.Point(198, 9);
+            this.lblSourceVoltage.Name = "lblSourceVoltage";
+            this.lblSourceVoltage.Size = new System.Drawing.Size(60, 26);
+            this.lblSourceVoltage.TabIndex = 5;
+            this.lblSourceVoltage.Text = "0000";
             // 
             // label3
             // 
@@ -224,23 +224,23 @@
             // 
             // rtgBat
             // 
-            this.rtgBat.BackColor = System.Drawing.Color.Black;
-            this.rtgBat.ForeColor = System.Drawing.Color.White;
-            this.rtgBat.Location = new System.Drawing.Point(12, 29);
-            this.rtgBat.Name = "rtgBat";
-            this.rtgBat.numXLables = 4;
-            this.rtgBat.numYLables = 5;
-            this.rtgBat.Size = new System.Drawing.Size(324, 115);
-            this.rtgBat.TabIndex = 1;
-            this.rtgBat.YMaximum = 10000D;
-            this.rtgBat.YMinimum = 0D;
+            this.rtgSourceVoltage.BackColor = System.Drawing.Color.Black;
+            this.rtgSourceVoltage.ForeColor = System.Drawing.Color.White;
+            this.rtgSourceVoltage.Location = new System.Drawing.Point(12, 29);
+            this.rtgSourceVoltage.Name = "rtgBat";
+            this.rtgSourceVoltage.numXLables = 4;
+            this.rtgSourceVoltage.numYLables = 5;
+            this.rtgSourceVoltage.Size = new System.Drawing.Size(324, 115);
+            this.rtgSourceVoltage.TabIndex = 1;
+            this.rtgSourceVoltage.YMaximum = 10000D;
+            this.rtgSourceVoltage.YMinimum = 0D;
             // 
             // panel5
             // 
             this.panel5.Controls.Add(this.label10);
-            this.panel5.Controls.Add(this.lblLux);
+            this.panel5.Controls.Add(this.lblAirSpeed);
             this.panel5.Controls.Add(this.label4);
-            this.panel5.Controls.Add(this.rtgLux);
+            this.panel5.Controls.Add(this.rtgAirSpeed);
             this.panel5.Location = new System.Drawing.Point(443, 23);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(338, 142);
@@ -257,40 +257,40 @@
             this.label10.TabIndex = 5;
             this.label10.Text = "mw/m^2";
             // 
-            // lblLux
+            // lblAirSpeed
             // 
-            this.lblLux.AutoSize = true;
-            this.lblLux.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblLux.ForeColor = System.Drawing.Color.GreenYellow;
-            this.lblLux.Location = new System.Drawing.Point(190, 7);
-            this.lblLux.Name = "lblLux";
-            this.lblLux.Size = new System.Drawing.Size(60, 26);
-            this.lblLux.TabIndex = 4;
-            this.lblLux.Text = "0000";
+            this.lblAirSpeed.AutoSize = true;
+            this.lblAirSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAirSpeed.ForeColor = System.Drawing.Color.GreenYellow;
+            this.lblAirSpeed.Location = new System.Drawing.Point(190, 7);
+            this.lblAirSpeed.Name = "lblAirSpeed";
+            this.lblAirSpeed.Size = new System.Drawing.Size(60, 26);
+            this.lblAirSpeed.TabIndex = 4;
+            this.lblAirSpeed.Text = "0000";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(72, 11);
+            this.label4.Location = new System.Drawing.Point(91, 11);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(112, 20);
+            this.label4.Size = new System.Drawing.Size(79, 20);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Light Intensity ";
+            this.label4.Text = "Air Speed";
             // 
             // rtgLux
             // 
-            this.rtgLux.BackColor = System.Drawing.Color.Black;
-            this.rtgLux.ForeColor = System.Drawing.Color.White;
-            this.rtgLux.Location = new System.Drawing.Point(19, 29);
-            this.rtgLux.Name = "rtgLux";
-            this.rtgLux.numXLables = 4;
-            this.rtgLux.numYLables = 5;
-            this.rtgLux.Size = new System.Drawing.Size(315, 110);
-            this.rtgLux.TabIndex = 2;
-            this.rtgLux.YMaximum = 5000D;
-            this.rtgLux.YMinimum = 0D;
+            this.rtgAirSpeed.BackColor = System.Drawing.Color.Black;
+            this.rtgAirSpeed.ForeColor = System.Drawing.Color.White;
+            this.rtgAirSpeed.Location = new System.Drawing.Point(19, 29);
+            this.rtgAirSpeed.Name = "rtgLux";
+            this.rtgAirSpeed.numXLables = 4;
+            this.rtgAirSpeed.numYLables = 5;
+            this.rtgAirSpeed.Size = new System.Drawing.Size(315, 110);
+            this.rtgAirSpeed.TabIndex = 2;
+            this.rtgAirSpeed.YMaximum = 5000D;
+            this.rtgAirSpeed.YMinimum = 0D;
             // 
             // panel6
             // 
@@ -300,7 +300,7 @@
             this.panel6.Size = new System.Drawing.Size(750, 13);
             this.panel6.TabIndex = 5;
             // 
-            // PayloadGraphForm
+            // TelemetryChartsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -312,7 +312,7 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Name = "PayloadGraphForm";
+            this.Name = "TelemetryChartsForm";
             this.Text = "Payload Plot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DataGraphForm_FormClosing);
             this.Load += new System.EventHandler(this.PayloadGraphForm_Load);
@@ -333,25 +333,25 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private RealTimeGraph rtgTemp;
+        private RealTimeGraph rtgTemperature;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label2;
-        private RealTimeGraph rtgAlt;
+        private RealTimeGraph rtgAltitude;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label3;
-        private RealTimeGraph rtgBat;
+        private RealTimeGraph rtgSourceVoltage;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label4;
-        private RealTimeGraph rtgLux;
+        private RealTimeGraph rtgAirSpeed;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Label lblTmp;
-        private System.Windows.Forms.Label lblAlt;
+        private System.Windows.Forms.Label lblTemperature;
+        private System.Windows.Forms.Label lblAltitude;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label lblVolt;
+        private System.Windows.Forms.Label lblSourceVoltage;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label lblLux;
+        private System.Windows.Forms.Label lblAirSpeed;
 
     }
 }

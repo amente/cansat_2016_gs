@@ -9,33 +9,33 @@ using System.Windows.Forms;
 
 namespace CanSatGroundStation
 {
-    public partial class PayloadGraphForm : Form
+    public partial class TelemetryChartsForm : Form
     {
-        public PayloadGraphForm()
+        public TelemetryChartsForm()
         {
             InitializeComponent();
         }
 
-        public void addPacket(TelemetryPacket packet)
+        public void updateChartsWithPacket(TelemetryPacket telemetryPacket)
         {
-            /*
-            rtgTemp.AddDataPoint(packet.temperature);            
-            rtgAlt.AddDataPoint(packet.altitude);           
-            rtgBat.AddDataPoint(packet.batVoltage);            
-            rtgLux.AddDataPoint(packet.lux);           
+            
+            rtgTemperature.AddDataPoint(telemetryPacket.TemperatureInCelcius);            
+            rtgAltitude.AddDataPoint(telemetryPacket.AltitudeInMeters);           
+            rtgSourceVoltage.AddDataPoint(telemetryPacket.SourceVoltage);            
+            rtgAirSpeed.AddDataPoint(telemetryPacket.AirspeedInMetersPerSec);           
 
             this.Invoke((MethodInvoker)delegate
             {
-                rtgTemp.Refresh();
-                rtgAlt.Refresh();
-                rtgBat.Refresh();
-                rtgLux.Refresh();
+                rtgTemperature.Refresh();
+                rtgAltitude.Refresh();
+                rtgSourceVoltage.Refresh();
+                rtgAirSpeed.Refresh();
 
-                lblTmp.Text = packet.temperature.ToString("F1");
-                lblAlt.Text = packet.altitude.ToString("F1");
-                lblVolt.Text = packet.batVoltage.ToString();
-                lblLux.Text = packet.lux.ToString();
-            });     */       
+                lblTemperature.Text = telemetryPacket.TemperatureInCelcius.ToString("F1");
+                lblAltitude.Text = telemetryPacket.AltitudeInMeters.ToString("F1");
+                lblSourceVoltage.Text = telemetryPacket.SourceVoltage.ToString();
+                lblAirSpeed.Text = telemetryPacket.AirspeedInMetersPerSec.ToString();
+            });          
         }
 
         private void DataGraphForm_FormClosing(object sender, FormClosingEventArgs e)

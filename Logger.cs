@@ -81,7 +81,7 @@ namespace CanSatGroundStation
             }
         }
 
-        public void logValid(TelemetryPacket packet)
+        public void logTelemetryPacket(TelemetryPacket packet)
         {
             // This method is called when a valid telemetry packet is parsed
             // This method is called when the serial port recieves data 

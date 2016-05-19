@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImageReceiver.cs" />
     <Compile Include="PacketParser.cs" />
     <Compile Include="DataSimulatorForm.cs">
       <SubType>Form</SubType>
@@ -91,17 +92,17 @@
     </Compile>
     <Compile Include="Container.cs" />
     <Compile Include="XBee.cs" />
-    <Compile Include="PayloadGraphForm.cs">
+    <Compile Include="TelemetryChartsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PayloadGraphForm.Designer.cs">
-      <DependentUpon>PayloadGraphForm.cs</DependentUpon>
+    <Compile Include="TelemetryChartsForm.Designer.cs">
+      <DependentUpon>TelemetryChartsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataTableForm.cs">
+    <Compile Include="TelemetryDataTableForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataTableForm.Designer.cs">
-      <DependentUpon>DataTableForm.cs</DependentUpon>
+    <Compile Include="TelemetryDataTableForm.Designer.cs">
+      <DependentUpon>TelemetryDataTableForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="GroundStationControl.cs">
@@ -136,11 +137,11 @@
     <EmbeddedResource Include="DataSimulatorForm.resx">
       <DependentUpon>DataSimulatorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PayloadGraphForm.resx">
-      <DependentUpon>PayloadGraphForm.cs</DependentUpon>
+    <EmbeddedResource Include="TelemetryChartsForm.resx">
+      <DependentUpon>TelemetryChartsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DataTableForm.resx">
-      <DependentUpon>DataTableForm.cs</DependentUpon>
+    <EmbeddedResource Include="TelemetryDataTableForm.resx">
+      <DependentUpon>TelemetryDataTableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GroundStationControl.resx">
       <DependentUpon>GroundStationControl.cs</DependentUpon>

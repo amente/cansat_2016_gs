@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace CanSatGroundStation
 {
-    public partial class DataTableForm : Form
+    public partial class TelemetryDataTableForm : Form
     {
         DataTable table = new DataTable();
         
 
         //<TEAM ID>,<PACKET COUNT>,<MISSION_TIME>,<ALT SENSOR>,<TEMP>,<VOLTAGE>,<LUX>
-        public DataTableForm()
+        public TelemetryDataTableForm()
         {
             InitializeComponent();         
 

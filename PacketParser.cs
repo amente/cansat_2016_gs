@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -17,6 +18,8 @@ namespace CanSatGroundStation
         private int missionTimeMin;
         private int missionTimeSec;
         private int missionTime100thOfSec;
+
+        private byte packetType;
 
 
         public byte TeamIdHighByte
@@ -95,6 +98,19 @@ namespace CanSatGroundStation
             }
         }
 
+        public byte PacketType
+        {
+            get
+            {
+                return packetType;
+            }
+
+            set
+            {
+                packetType = value;
+            }
+        }
+
         public void updateWithPacket(Packet packet)
         {
             this.TeamIdHighByte = packet.TeamIdHighByte;
@@ -103,6 +119,22 @@ namespace CanSatGroundStation
             this.MissionTimeMin = packet.MissionTimeMin;
             this.MissionTimeSec = packet.MissionTimeSec;
             this.MissionTime100thOfSec = packet.MissionTime100thOfSec;
+            this.packetType = packet.PacketType;
+        }
+
+        public byte[] getPacketHeader()
+        {
+            List<byte> headerBytesList = new List<byte>();
+
+            headerBytesList.Add(TeamIdHighByte);
+            headerBytesList.Add(TeamIdLowByte);
+            headerBytesList.Add((byte)MissionTimeHour);
+            headerBytesList.Add((byte)MissionTimeMin);
+            headerBytesList.Add((byte)MissionTimeSec);
+            headerBytesList.Add((byte)MissionTime100thOfSec);
+            headerBytesList.Add(PacketType);
+
+            return headerBytesList.ToArray();
         }
     }
 
@@ -115,6 +147,7 @@ namespace CanSatGroundStation
         private float pressureInPascals;
         private float airspeedInMetersPerSec;
         private float temperatureInCelcius;
+        private float voltage;
         private double gpsLatitude;
         private double gpsLongitude;
         private float gpsAltitude;
@@ -251,6 +284,19 @@ namespace CanSatGroundStation
             }
         }
 
+        public float SourceVoltage
+        {
+            get
+            {
+                return voltage;
+            }
+
+            set
+            {
+                voltage = value;
+            }
+        }
+
         public void updateWithBinaryData(byte[] telemetryDataBinary)
         {
             //Convert the binary data to Csv Ascii string
@@ -260,10 +306,7 @@ namespace CanSatGroundStation
 
         public void updateWithCsvData(String csvString)
         {
-            /* <PACKET COUNT> (int) ,<ALT SENSOR> (float .x), <PRESSURE>(float .xx),<SPEED>(float .xx), <TEMP>(float .x),<VOLTAGE> (float .x),
-    * <GPS LATITUDE>(double .xxxxxx) ,<GPSLONGITUDE> (double .xxxxxx) ,<GPS ALTITUDE> (flaot .x),<GPS SAT NUM>(int),<GPS SPEED>(float .xx)*/
-
-            int numberOfTelemetryValues = 11;
+          int numberOfTelemetryValues = 11;
 
             String[] telemetryValues = csvString.Trim().Split(',');
             if(telemetryValues.Length != numberOfTelemetryValues)
@@ -275,32 +318,353 @@ namespace CanSatGroundStation
                 return;
             }
 
+            updateWithTelemetryValues(telemetryValues);          
+                    
 
+        }
+
+        public void parsePacketCountValue(String stringPacketCountValue)
+        {
             int packetCount = 0;
-            if(int.TryParse(telemetryValues[0], out packetCount))
+            if (int.TryParse(stringPacketCountValue, out packetCount))
             {
                 this.PacketCount = packetCount;
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Invalid Packet count value: " + telemetryValues[0]);
+                System.Diagnostics.Debug.WriteLine("Invalid Packet count value: " + stringPacketCountValue);
+            }
+        }
+
+        public void parseAltitudeValue(String stringAltitudeValue)
+        {
+            float altitude = 0;
+            if (float.TryParse(stringAltitudeValue, out altitude))
+            {
+                this.AltitudeInMeters = altitude;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid Altitude value: " + stringAltitudeValue);
+            }
+        }
+
+        public void parsePressureValue(String stringPressureValue)
+        {
+            float pressure = 0;
+            if (float.TryParse(stringPressureValue, out pressure))
+            {
+                this.PressureInPascals = pressure;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid Pressure value: " + stringPressureValue);
+            }
+        }
+
+        public void parseAirSpeedValue(String stringAirSpeedValue)
+        {
+            float airSpeed = 0;
+            if (float.TryParse(stringAirSpeedValue, out airSpeed))
+            {
+                this.AirspeedInMetersPerSec = airSpeed;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid AirSpeed value: " + stringAirSpeedValue);
+            }
+        }
+
+        public void parseTemperatureValue(String stringTemperatureValue)
+        {
+            float temperature = 0;
+            if (float.TryParse(stringTemperatureValue, out temperature))
+            {
+                this.TemperatureInCelcius = temperature;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid Temperature value: " + stringTemperatureValue);
+            }
+        }
+
+        public void parseVoltageValue(String stringVoltageValue)
+        {
+            float voltage;
+            if (float.TryParse(stringVoltageValue, out voltage))
+            {
+                this.voltage = voltage;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid Voltage value: " + stringVoltageValue);
+            }
+        }
+
+        public void parseGpsLatitudeValue(String stringGpsLatitudeValue)
+        {
+            long gpsLatitudeValue;
+            if (long.TryParse(stringGpsLatitudeValue, out gpsLatitudeValue))
+            {
+                this.GpsLatitude = gpsLatitudeValue;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid GPS latitude value: " + gpsLatitudeValue);
+            }
+        }
+
+
+        public void parseGpsLongitudeValue(String stringGpsLongitudeValue)
+        {
+            long gpsLongitudeValue;
+            if (long.TryParse(stringGpsLongitudeValue, out gpsLongitudeValue))
+            {
+                this.GpsLongitude = gpsLongitudeValue;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid GPS longitude value: " + stringGpsLongitudeValue);
+            }
+        }
+
+
+        public void parseGpsAltitudeValue(String stringGpsAltitudeValue)
+        {
+            float gpsAltitudeValue;
+            if (float.TryParse(stringGpsAltitudeValue, out gpsAltitudeValue))
+            {
+                this.GpsAltitude = gpsAltitudeValue;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid GPS altitude value: " + stringGpsAltitudeValue);
+            }
+        }
+
+        public void parseGpsSatNumberValue(String stringGpsSatNumberValue)
+        {
+            int gpsSatNumberValue;
+            if (int.TryParse(stringGpsSatNumberValue, out gpsSatNumberValue))
+            {
+                this.GpsSatNumber = gpsSatNumberValue;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid GPS sat number value: " + stringGpsSatNumberValue);
             }
 
-            
+        }
 
+        public void parseGpsSpeedValue(String stringGpsSpeedValue)
+        {
+            float gpsSpeedValue;
+            if (float.TryParse(stringGpsSpeedValue, out gpsSpeedValue))
+            {
+                this.GpsSpeedInMetersPerSec = gpsSpeedValue;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Invalid GPS speed value: " + stringGpsSpeedValue);
+            }
 
+        }
+
+        public void updateWithTelemetryValueAtIndex(String stringTelemetryValue, int index)
+        {
+            /* <PACKET COUNT> (int) ,<ALT SENSOR> (float .x), <PRESSURE>(float .xx),<SPEED>(float .xx), <TEMP>(float .x),<VOLTAGE> (float .x),
+* <GPS LATITUDE>(double .xxxxxx) ,<GPSLONGITUDE> (double .xxxxxx) ,<GPS ALTITUDE> (flaot .x),<GPS SAT NUM>(int),<GPS SPEED>(float .xx)*/
+            switch (index)
+            {
+                case 0:
+                    parsePacketCountValue(stringTelemetryValue);
+                    break;
+                case 1:
+                    parseAltitudeValue(stringTelemetryValue);
+                    break;
+                case 2:
+                    parsePressureValue(stringTelemetryValue);
+                    break;
+                case 3:
+                    parseAirSpeedValue(stringTelemetryValue);
+                    break;
+                case 4:
+                    parseTemperatureValue(stringTelemetryValue);
+                    break;
+                case 5:
+                    parseVoltageValue(stringTelemetryValue);
+                    break;
+                case 6:
+                    parseGpsLatitudeValue(stringTelemetryValue);
+                    break;
+                case 7:
+                    parseGpsLongitudeValue(stringTelemetryValue);
+                    break;
+                case 8:
+                    parseGpsAltitudeValue(stringTelemetryValue);
+                    break;
+                case 9:
+                    parseGpsSatNumberValue(stringTelemetryValue);
+                    break;
+                case 10:
+                    parseGpsSpeedValue(stringTelemetryValue);
+                    break;
+            }
+        }
+
+        public void updateWithTelemetryValues(String[] telemetryValues)
+        {
+           for (int i = 0; i < telemetryValues.Length; i++)
+            {
+                String stringTelemetryValue = telemetryValues[i];
+                updateWithTelemetryValueAtIndex(stringTelemetryValue, i);
+            }
+        }
+
+        public String[] toStringArray()
+        {
+            IList<String> csvTelemetryString = new List<String>
+            {
+                PacketCount.ToString(),
+                AltitudeInMeters.ToString(),
+                PressureInPascals.ToString(),
+                AirspeedInMetersPerSec.ToString(),
+                TemperatureInCelcius.ToString(),
+                SourceVoltage.ToString(),
+                GpsLatitude.ToString(),
+                GpsLongitude.ToString(),
+                GpsAltitude.ToString(),
+                GpsSatNumber.ToString(),
+                gpsSpeedInMetersPerSec.ToString()
+            };
+
+            return csvTelemetryString.ToArray();
         }
 
         public String toString()
         {
-            //TODO:
-            return "";
+            return toCsvString();
+        }
+
+        public String toCsvString()
+        {
+            String[] telemetryStringArray = toStringArray();
+            return string.Join(",", telemetryStringArray);
+        }
+
+        public byte[] getBinaryDataWithHeader()
+        {
+            String telemetryCsvString = toCsvString();
+            byte[] telemetryCsvStringBytes = Encoding.ASCII.GetBytes(telemetryCsvString);
+            byte[] headerBytes = getPacketHeader();
+
+            List<byte> telemetryDataBytesWithHeaderList = new List<byte>();
+            telemetryDataBytesWithHeaderList.AddRange(headerBytes);
+            telemetryDataBytesWithHeaderList.AddRange(telemetryCsvStringBytes);
+
+            return telemetryDataBytesWithHeaderList.ToArray();
+
         }
     }
 
     public class ImagePacket: Packet
     {
+        private byte imageChunkOffsetHigh;
+        private byte imageChunkOffsetLow;
 
+        private byte[] imageDataBytes;
+
+        public byte ImageChunkOffsetHigh
+        {
+            get
+            {
+                return imageChunkOffsetHigh;
+            }
+
+            set
+            {
+                imageChunkOffsetHigh = value;
+            }
+        }
+
+        public byte ImageChunkOffsetLow
+        {
+            get
+            {
+                return imageChunkOffsetLow;
+            }
+
+            set
+            {
+                imageChunkOffsetLow = value;
+            }
+        }
+
+        public byte[] ImageDataBytes
+        {
+            get
+            {
+                return imageDataBytes;
+            }
+
+            set
+            {
+                imageDataBytes = value;
+            }
+        }
+
+        public int ImageChunkOffset
+        {
+            get
+            {
+                return (ImageChunkOffsetLow | ImageChunkOffsetHigh << 8);
+            }
+            set
+            {
+                ImageChunkOffsetHigh = (byte)(value >> 8);
+                ImageChunkOffsetLow = (byte)(value & 0x00FF);
+            }
+        }
+
+
+        private byte[] toBinaryPacketData()
+        {
+            byte[] imagePacketBytes = null;
+            if (imageDataBytes != null)
+            {
+                imagePacketBytes = new byte[ImageDataBytes.Length + 2];
+                imagePacketBytes[0] = ImageChunkOffsetHigh;
+                imagePacketBytes[1] = ImageChunkOffsetLow;
+                for(int i=0; i<ImageDataBytes.Length; i++)
+                {
+                    imagePacketBytes[i + 2] = ImageDataBytes[i];
+                }
+                return imagePacketBytes;
+            }
+
+            return imagePacketBytes;
+        }
+
+        public void updateWithBinaryData(byte[] imagePacketBinaryData)
+        {
+            if(imagePacketBinaryData.Length < 2)
+            {
+                Debug.WriteLine("Image packet binary data is less than the minimum lenght 2. Actual Length " +
+                    imagePacketBinaryData.Length);
+                return;
+            }
+            //First two bytes are the image chunk count
+            imageChunkOffsetHigh = imagePacketBinaryData[0];
+            ImageChunkOffsetLow = imagePacketBinaryData[1];
+
+            ImageDataBytes = new byte[imagePacketBinaryData.Length - 2]; 
+
+            for(int i=0; i< ImageDataBytes.Length; i++)
+            {
+                ImageDataBytes[i] = imagePacketBinaryData[i + 2];
+            }
+
+        }
     }
 
     class PacketParser
@@ -328,7 +692,7 @@ namespace CanSatGroundStation
                 
                if (packetParserInstance == null)
                {
-                   packetParserInstance = new PacketParser();                        
+                   packetParserInstance = new PacketParser();                                   
                }
 
                 return packetParserInstance;
@@ -339,6 +703,7 @@ namespace CanSatGroundStation
         public void parse(XBeeIncomingPacket incomingPacket)
         {
             byte[] packetDataArray = incomingPacket.PacketData;
+            IEnumerable<byte> packetDataArrayReverse = packetDataArray.Reverse();
 
             //Conver the packet data array to a stack of bytes
             Stack<byte> packetDataStack = new Stack<byte>();
@@ -433,7 +798,7 @@ namespace CanSatGroundStation
         private ImagePacket parseImagePacket(Stack<byte> packetDataStack)
         {
             ImagePacket imagePacket = new ImagePacket();
-            //TODO: Actual parsing
+            imagePacket.updateWithBinaryData(packetDataStack.ToArray());
 
             return imagePacket;
         }
