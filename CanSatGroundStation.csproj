@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandSender.cs" />
     <Compile Include="ImageReceiver.cs" />
     <Compile Include="PacketParser.cs" />
     <Compile Include="DataSimulatorForm.cs">

@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace CanSatGroundStation
 {
-    public delegate void ImageFileUpdateHandler(String imagePath);
+    public delegate void ImageFileUpdateHandler(Image image);
 
     class ImageReceiver
     {
 
         private static volatile ImageReceiver imageReceiver;
 
-        private String imageDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-        private static int MIN_IMAGE_BYTES_TO_WRITE_FILE = 300;
+        private static String imageDirPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+        private static int MIN_IMAGE_BYTES_TO_WRITE_FILE = 5000;
 
         private int lastReceivedChunkOffset = 0;
 
@@ -24,6 +25,8 @@ namespace CanSatGroundStation
 
         private static int receivedImagesCount = 0;
 
+        private static FileStream imageFileStream;
+
         public static ImageReceiver Instance
         {
             get
@@ -31,6 +34,8 @@ namespace CanSatGroundStation
                 if (imageReceiver == null)
                 {
                     imageReceiver = new ImageReceiver();
+                    String imagePath = imageDirPath + "\\" + "image_" + DateTime.Now.ToString("HHmmsstt") + ".jpg";
+                    imageFileStream = new FileStream(imagePath, FileMode.Create);
                 }
                 return imageReceiver;
             }
@@ -47,14 +52,14 @@ namespace CanSatGroundStation
                 int imageChunkOffsetDifference = imagePacket.ImageChunkOffset - lastReceivedChunkOffset;
                 if (imageChunkOffsetDifference > MIN_IMAGE_BYTES_TO_WRITE_FILE)
                 {
-                    updateImageFile();
+                    //updateImageFile();                    
                 }
             }
             else
             {
                 //We have received the last image chunk, update the image file and update the receiver state
                 updateImageFile();
-                receivedImageDataBytes.Clear();
+               
                 receivedImagesCount++;
             }
 
@@ -64,9 +69,7 @@ namespace CanSatGroundStation
 
         public void updateImageFile()
         {
-            String imagePath = imageDirPath + "/" + "image_" + receivedImagesCount;
-            FileStream s1 = new FileStream(imagePath, FileMode.Create);
-            BinaryWriter binaryWritter = new BinaryWriter(s1);
+            BinaryWriter binaryWritter = new BinaryWriter(imageFileStream);
             // This method is called when the serial port recieves data 
             try
             {
@@ -75,7 +78,15 @@ namespace CanSatGroundStation
                     binaryWritter.Write(receivedImageDataBytes.ToArray());
                 }
 
-                imageFileUpdateHandler(imagePath);
+                receivedImageDataBytes.Clear();
+                String currentImagePath = imageFileStream.Name;
+                imageFileStream.Close();
+
+                Image image = Image.FromFile(currentImagePath);
+                imageFileUpdateHandler(image);
+                
+                String imagePath = imageDirPath + "\\" + "image_" + DateTime.Now.ToString("HHmmsstt") + ".jpg";
+                imageFileStream = new FileStream(imagePath, FileMode.Create);
             }
             catch (Exception e)
             {
@@ -83,7 +94,7 @@ namespace CanSatGroundStation
             }
             finally
             {
-                s1.Close();
+                //s1.Close();
             }
 
         }

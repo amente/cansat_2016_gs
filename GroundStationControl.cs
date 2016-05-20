@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO.Ports;
 using System.Diagnostics;
+using System.IO;
 
 namespace CanSatGroundStation
 {
@@ -79,9 +80,21 @@ namespace CanSatGroundStation
             //Debug.WriteLine("Incoming Packet Frame Type: " + packet.FrameType.ToString());
         }
 
-        public void ImageFileUpdateHandler(String imagePath)
+        public void ImageFileUpdateHandler(Image image)
         {
+            this.Invoke((MethodInvoker)delegate
+            {
+                try
+                {
+                    this.pictureBox1.Image = image;
+                    this.pictureBox1.Refresh();
+                }
+                catch(Exception e)
+                {
+                    Debug.WriteLine("Image file is corrupted.");
+                }
 
+            });
         }
 
         public void OnImagePacketAvailable(ImagePacket imagePacket)
@@ -133,6 +146,11 @@ namespace CanSatGroundStation
         private void btnStatus_Click_1(object sender, EventArgs e)
         {
             statusForm.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            CommandSender.Instance.sendTakePictureCommand();
         }
     }
 }

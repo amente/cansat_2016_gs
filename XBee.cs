@@ -13,21 +13,12 @@ namespace CanSatGroundStation
 
     public class XBeeIncomingPacket
     {
-        private const byte RECIEVE_PACKET_FRAME_TYPE = 0x90;
-        private const byte TRANSMIT_STATUS_FRAME_TYPE = 0x8B;
-
-        public enum XBEE_FRAME_TYPE
-        {
-            RECIEVE_PACKET = RECIEVE_PACKET_FRAME_TYPE,
-            TRANSMIT_STATUS = TRANSMIT_STATUS_FRAME_TYPE,
-            UNKNOWN_FRAME_TYPE
-        }
 
         private byte[] packetLengthBytes = new byte[2];
-        private XBEE_FRAME_TYPE frameType;
+        private XBee.XBEE_FRAME_TYPE frameType;
         private byte[] packetData;
 
-        public XBEE_FRAME_TYPE FrameType
+        public XBee.XBEE_FRAME_TYPE FrameType
         {
             get
             {
@@ -115,7 +106,7 @@ namespace CanSatGroundStation
             writeOffset ++;
 
             //Frame type
-            recievePacket[writeOffset] = RECIEVE_PACKET_FRAME_TYPE;
+            recievePacket[writeOffset] = XBee.RECIEVE_PACKET_FRAME_TYPE;
             writeOffset++;
 
             //TODO:Next 8 bytes are 64 bit source address, leave empty
@@ -138,23 +129,130 @@ namespace CanSatGroundStation
             return recievePacket;
         }
 
-        public static XBEE_FRAME_TYPE toFrameType(byte frameTypeByte)
+        public static XBee.XBEE_FRAME_TYPE toFrameType(byte frameTypeByte)
         {
             switch(frameTypeByte)
             {
-                case RECIEVE_PACKET_FRAME_TYPE:
-                    return XBEE_FRAME_TYPE.RECIEVE_PACKET;
-                case TRANSMIT_STATUS_FRAME_TYPE:
-                    return XBEE_FRAME_TYPE.TRANSMIT_STATUS;
+                case XBee.RECIEVE_PACKET_FRAME_TYPE:
+                    return XBee.XBEE_FRAME_TYPE.RECIEVE_PACKET;
+                case XBee.TRANSMIT_STATUS_FRAME_TYPE:
+                    return XBee.XBEE_FRAME_TYPE.TRANSMIT_STATUS;
                 default:
-                    return XBEE_FRAME_TYPE.UNKNOWN_FRAME_TYPE;
+                    return XBee.XBEE_FRAME_TYPE.UNKNOWN_FRAME_TYPE;
             }
         }
 
     }
 
 
-    class XBee
+    public class XBeeOutgoingPacket
+    {
+
+        private byte startDelimiter = XBee.XBEE_PACKET_START_DELIMITER;
+        private byte[] packetLengthBytes = new byte[2];
+        private XBee.XBEE_FRAME_TYPE frameType;
+        private byte frameId;
+        byte[] destAddress64Bit = new byte[8];
+        byte[] destAddress16Bit = new byte[2];
+        byte broadcastRadius;
+        byte options;
+        byte[] packetData = new byte[1];
+        byte checksum;
+
+        public XBeeOutgoingPacket()
+        {
+            //TODO: Fix hardcoded values
+            frameType = XBee.XBEE_FRAME_TYPE.TRANSMIT_REQUEST;
+            frameId = 0x01;
+            destAddress64Bit = new byte[] {0x00, 0x13, 0xA2, 0x00, 0x40, 0xC8, 0xA1, 0x9C};
+            destAddress16Bit = new byte[] {0xFF, 0xFE};
+            broadcastRadius = 0x00;
+            options = 0x00;
+        }
+
+        public byte[] PacketData
+        {
+            get
+            {
+                return packetData;
+            }
+            set
+            {
+                packetData = value;
+                updatePacketLength();
+                updateChecksum();                
+            }
+        }
+
+        private void updatePacketLength()
+        {
+            int lengthWithData = 14 + packetData.Length;
+            packetLengthBytes[0] = (byte)((lengthWithData & 0xFF00) >> 8);
+            packetLengthBytes[1] = (byte)(lengthWithData & 0x00FF);
+            
+        }
+
+        private void updateChecksum()
+        {
+            int sum = 0;
+
+            sum += frameId;
+            sum += (int)frameType;
+
+            foreach(byte b in destAddress64Bit)
+            {
+                sum += (int)b;
+            }
+
+            foreach(byte b in destAddress16Bit)
+            {
+                sum += (int)b;
+            }
+
+            sum += broadcastRadius;
+            sum += options;
+
+            foreach(byte b in PacketData)
+            {
+                sum += b;
+            }
+
+            sum &= 0xFF;
+            checksum = (byte)(0xFF - sum);
+        }
+
+        public byte[] toByteArray()
+        {
+            List<byte> outGoingBytesList = new List<byte>();
+
+            //Construct the outgoing packet
+
+            outGoingBytesList.Add(startDelimiter);
+
+            outGoingBytesList.AddRange(packetLengthBytes);
+
+            outGoingBytesList.Add((byte)frameType);
+
+            outGoingBytesList.Add(frameId);
+
+            outGoingBytesList.AddRange(destAddress64Bit);
+
+            outGoingBytesList.AddRange(destAddress16Bit);
+
+            outGoingBytesList.Add(broadcastRadius);
+
+            outGoingBytesList.Add(options);
+
+            outGoingBytesList.AddRange(PacketData);
+
+            outGoingBytesList.Add(checksum);
+
+            return outGoingBytesList.ToArray();
+        }
+
+    }
+
+    public class XBee
     {
         private static volatile XBee xbee;
         private static object syncRoot = new Object();        
@@ -171,7 +269,20 @@ namespace CanSatGroundStation
         private static bool xbeeAPIFrameParsingStarted = false;
         private static int incomingPacketFrameIndex = 0;
         private static XBeeIncomingPacket incomingPacket;
- 
+
+        public const byte RECIEVE_PACKET_FRAME_TYPE = 0x90;
+        public const byte TRANSMIT_STATUS_FRAME_TYPE = 0x8B;
+        public const byte TRANSMIT_REQUEST_FRAME_TYPE = 0x10;
+
+        public enum XBEE_FRAME_TYPE
+        {
+            RECIEVE_PACKET = RECIEVE_PACKET_FRAME_TYPE,
+            TRANSMIT_STATUS = TRANSMIT_STATUS_FRAME_TYPE,
+            TRANSMIT_REQUEST = TRANSMIT_REQUEST_FRAME_TYPE,
+            UNKNOWN_FRAME_TYPE
+        }
+
+
         private XBee(){}
 
         public static XBee Instance
@@ -251,6 +362,19 @@ namespace CanSatGroundStation
                 byte incomingByte = (byte)serialPort.ReadByte();
                 IncomingByteHandler(incomingByte);
                 numberOfBytesToRead --;
+            }
+        }
+
+        public void sendOutGoingPacket(XBeeOutgoingPacket packet)
+        {
+            if(serialPort.IsOpen)
+            {
+                byte[] bytesToSend = packet.toByteArray();
+                serialPort.Write(bytesToSend, 0, bytesToSend.Length);
+            }
+            else
+            {
+                Debug.WriteLine("XBee can't send outgoing packet, serial port is not open. ");
             }
         }
 

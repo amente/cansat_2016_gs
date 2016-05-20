@@ -712,7 +712,7 @@ namespace CanSatGroundStation
                 packetDataStack.Push(b);
             }
             
-            if(incomingPacket.FrameType == XBeeIncomingPacket.XBEE_FRAME_TYPE.RECIEVE_PACKET)
+            if(incomingPacket.FrameType == XBee.XBEE_FRAME_TYPE.RECIEVE_PACKET)
             {
                 if(packetDataStack.Count < PACKET_PARSER_MIN_RECIEVE_PACKET_LENGTH)
                 {
@@ -782,6 +782,7 @@ namespace CanSatGroundStation
                         break;
                     case IMAGE_PACKET_TYPE:
                         ImagePacket newImagePacket = parseImagePacket(packetDataStack);
+                        //Debug.WriteLine(BitConverter.ToString(newImagePacket.ImageDataBytes));
                         newImagePacket.updateWithPacket(parsedPacket);
                         imagePacketAvailableHandler?.Invoke(newImagePacket);
                         break;
