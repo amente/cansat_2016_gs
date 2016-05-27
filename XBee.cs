@@ -330,6 +330,8 @@ namespace CanSatGroundStation
                     //Expect checksum byte
                     //Debug.WriteLine("Parsing Checksum Byte: " + incomingByte.ToString("X2"));
                     incomingPacket.verifyChecksum(incomingByte);
+
+
                     xbeeIncomingPacketAvaialbleHandler?.Invoke(incomingPacket);
 
                     incomingPacketFrameIndex = 0;

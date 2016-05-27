@@ -22,7 +22,8 @@ namespace CanSatGroundStation
             rtgTemperature.AddDataPoint(telemetryPacket.TemperatureInCelcius);            
             rtgAltitude.AddDataPoint(telemetryPacket.AltitudeInMeters);           
             rtgSourceVoltage.AddDataPoint(telemetryPacket.SourceVoltage);            
-            rtgAirSpeed.AddDataPoint(telemetryPacket.AirspeedInMetersPerSec);           
+            rtgAirSpeed.AddDataPoint(telemetryPacket.AirspeedInMetersPerSec);
+            rtgPressure.AddDataPoint(telemetryPacket.PressureInPascals);
 
             this.Invoke((MethodInvoker)delegate
             {
@@ -30,9 +31,11 @@ namespace CanSatGroundStation
                 rtgAltitude.Refresh();
                 rtgSourceVoltage.Refresh();
                 rtgAirSpeed.Refresh();
+                rtgPressure.Refresh();
 
                 lblTemperature.Text = telemetryPacket.TemperatureInCelcius.ToString("F1");
                 lblAltitude.Text = telemetryPacket.AltitudeInMeters.ToString("F1");
+                lblPressure.Text = telemetryPacket.PressureInPascals.ToString("F1");
                 lblSourceVoltage.Text = telemetryPacket.SourceVoltage.ToString();
                 lblAirSpeed.Text = telemetryPacket.AirspeedInMetersPerSec.ToString();
             });          

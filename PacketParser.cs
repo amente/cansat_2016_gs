@@ -403,22 +403,22 @@ namespace CanSatGroundStation
 
         public void parseGpsLatitudeValue(String stringGpsLatitudeValue)
         {
-            long gpsLatitudeValue;
-            if (long.TryParse(stringGpsLatitudeValue, out gpsLatitudeValue))
+            float gpsLatitudeValue;
+            if (float.TryParse(stringGpsLatitudeValue, out gpsLatitudeValue))
             {
                 this.GpsLatitude = gpsLatitudeValue;
             }
             else
             {
-                System.Diagnostics.Debug.WriteLine("Invalid GPS latitude value: " + gpsLatitudeValue);
+                System.Diagnostics.Debug.WriteLine("Invalid GPS latitude value: " + stringGpsLatitudeValue);
             }
         }
 
 
         public void parseGpsLongitudeValue(String stringGpsLongitudeValue)
         {
-            long gpsLongitudeValue;
-            if (long.TryParse(stringGpsLongitudeValue, out gpsLongitudeValue))
+            float gpsLongitudeValue;
+            if (float.TryParse(stringGpsLongitudeValue, out gpsLongitudeValue))
             {
                 this.GpsLongitude = gpsLongitudeValue;
             }
@@ -617,7 +617,7 @@ namespace CanSatGroundStation
         {
             get
             {
-                return (ImageChunkOffsetLow | ImageChunkOffsetHigh << 8);
+                return ((UInt16)ImageChunkOffsetLow | ((UInt16)ImageChunkOffsetHigh << 8));
             }
             set
             {
@@ -656,6 +656,8 @@ namespace CanSatGroundStation
             //First two bytes are the image chunk count
             imageChunkOffsetHigh = imagePacketBinaryData[0];
             ImageChunkOffsetLow = imagePacketBinaryData[1];
+
+            Debug.WriteLine("Offset: " + ImageChunkOffset);
 
             ImageDataBytes = new byte[imagePacketBinaryData.Length - 2]; 
 
