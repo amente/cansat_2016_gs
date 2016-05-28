@@ -12,6 +12,7 @@ using System.IO;
 
 namespace CanSatGroundStation
 {
+    
     public partial class GroundStationControl : Form
     {
        
@@ -20,7 +21,9 @@ namespace CanSatGroundStation
         CommandForm commandForm;
         ConfigForm configForm;
         StatusForm statusForm;
-        
+
+        Boolean pictureRecieveHasStarted = false;
+        TimeCalculate pictureRecieveTimer = new TimeCalculate();
 
         public GroundStationControl()
         {
@@ -97,13 +100,33 @@ namespace CanSatGroundStation
             });
         }
 
+        private void PictureRecieveTimerChanged(int timeInSecs)
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                lblPictureTransmissionTime.Text = timeInSecs.ToString();
+            });
+        }
+
         public void OnImagePacketAvailable(ImagePacket imagePacket)
         {
+            if(!pictureRecieveHasStarted)
+            {
+                pictureRecieveHasStarted = true;
+                pictureRecieveTimer.TimeInSecs = 0;
+                pictureRecieveTimer.TheTimeChanged += PictureRecieveTimerChanged;
+            }
             int numBytesRemaining = imagePacket.ImageChunkOffset;
             this.Invoke((MethodInvoker)delegate
             {
                 labelRemainingImageBytes.Text = numBytesRemaining.ToString();
             });
+
+            if(numBytesRemaining == 0)
+            {
+                pictureRecieveHasStarted = false;
+                pictureRecieveTimer.TheTimeChanged -= PictureRecieveTimerChanged;
+            }
 
         }
 
@@ -152,5 +175,52 @@ namespace CanSatGroundStation
         {
             CommandSender.Instance.sendTakePictureCommand();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CommandSender.Instance.sendResetCameraCommand();
+        }
     }
+
+    public class TimeCalculate
+    {
+        private Timer timer;
+
+        private int timeInSecs = 0;
+
+        public int TimeInSecs
+        {
+            get
+            {
+                return timeInSecs;
+            }
+            set
+            {
+                timeInSecs = value;
+                OnTheTimeChanged(this.timeInSecs);
+            }
+        }
+
+        public TimeCalculate()
+        {
+            timer = new Timer();
+            timer.Tick += new EventHandler(Timer_Tick);
+            timer.Interval = 1000;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            TimeInSecs += 1;
+        }
+
+        public delegate void TimerTickHandler(int timeInSecs);
+        public event TimerTickHandler TheTimeChanged;
+
+        protected void OnTheTimeChanged(int timeInSecs)
+        {
+            TheTimeChanged?.Invoke(timeInSecs);
+        }
+    }
+
 }

@@ -41,6 +41,7 @@ namespace CanSatGroundStation
         {
             XBeeOutgoingPacket commandPacket = new XBeeOutgoingPacket();
             commandPacket.PacketData = new byte[] { COMMAND_BYTE_RESET_CAMERA };
+            Debug.WriteLine("Reset camera command sent: " + BitConverter.ToString(commandPacket.toByteArray()));
             XBee.Instance.sendOutGoingPacket(commandPacket);
         }
 

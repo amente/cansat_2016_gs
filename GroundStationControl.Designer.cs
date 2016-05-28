@@ -43,6 +43,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.labelRemainingImageBytes = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblPictureTransmissionTime = new System.Windows.Forms.Label();
             this.stsStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -173,12 +176,43 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(537, 72);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(115, 23);
+            this.button2.TabIndex = 21;
+            this.button2.Text = "Reset Camera";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(671, 100);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(97, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Transmission Time:";
+            // 
+            // lblPictureTransmissionTime
+            // 
+            this.lblPictureTransmissionTime.AutoSize = true;
+            this.lblPictureTransmissionTime.Location = new System.Drawing.Point(777, 100);
+            this.lblPictureTransmissionTime.Name = "lblPictureTransmissionTime";
+            this.lblPictureTransmissionTime.Size = new System.Drawing.Size(13, 13);
+            this.lblPictureTransmissionTime.TabIndex = 23;
+            this.lblPictureTransmissionTime.Text = "0";
+            // 
             // GroundStationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(858, 630);
+            this.Controls.Add(this.lblPictureTransmissionTime);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.labelRemainingImageBytes);
             this.Controls.Add(this.label1);
@@ -220,6 +254,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelRemainingImageBytes;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblPictureTransmissionTime;
     }
 }
 
