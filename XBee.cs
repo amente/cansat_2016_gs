@@ -164,7 +164,7 @@ namespace CanSatGroundStation
             //TODO: Fix hardcoded values
             frameType = XBee.XBEE_FRAME_TYPE.TRANSMIT_REQUEST;
             frameId = 0x01;
-            destAddress64Bit = new byte[] {0x00, 0x13, 0xA2, 0x00, 0x40, 0xC8, 0xA1, 0x9C};
+            destAddress64Bit = new byte[] {0x00, 0x13, 0xA2, 0x00, 0x41, 0x47, 0x13, 0x7C};
             destAddress16Bit = new byte[] {0xFF, 0xFE};
             broadcastRadius = 0x00;
             options = 0x00;

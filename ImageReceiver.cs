@@ -44,7 +44,7 @@ namespace CanSatGroundStation
 
         public void receiveImagePacket(ImagePacket imagePacket)
         {
-            receivedImageDataBytes.AddRange(imagePacket.ImageDataBytes);
+           receivedImageDataBytes.AddRange(imagePacket.ImageDataBytes);
 
             if (imagePacket.ImageChunkOffset != 0)
             {
@@ -64,7 +64,7 @@ namespace CanSatGroundStation
             }
 
             //Update the offset
-            lastReceivedChunkOffset = imagePacket.ImageChunkOffset;
+            lastReceivedChunkOffset = imagePacket.ImageChunkOffset;  
         }
 
         public void updateImageFile()
