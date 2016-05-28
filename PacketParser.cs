@@ -17,7 +17,7 @@ namespace CanSatGroundStation
         private int missionTimeHour;
         private int missionTimeMin;
         private int missionTimeSec;
-        private int missionTime100thOfSec;
+        private int missionState;
 
         private byte packetType;
 
@@ -85,16 +85,16 @@ namespace CanSatGroundStation
             }
         }
 
-        public int MissionTime100thOfSec
+        public int MissionState
         {
             get
             {
-                return missionTime100thOfSec;
+                return missionState;
             }
 
             set
             {
-                missionTime100thOfSec = value;
+                missionState = value;
             }
         }
 
@@ -118,7 +118,7 @@ namespace CanSatGroundStation
             this.MissionTimeHour = packet.MissionTimeHour;
             this.MissionTimeMin = packet.MissionTimeMin;
             this.MissionTimeSec = packet.MissionTimeSec;
-            this.MissionTime100thOfSec = packet.MissionTime100thOfSec;
+            this.MissionState = packet.MissionState;
             this.packetType = packet.PacketType;
         }
 
@@ -131,7 +131,7 @@ namespace CanSatGroundStation
             headerBytesList.Add((byte)MissionTimeHour);
             headerBytesList.Add((byte)MissionTimeMin);
             headerBytesList.Add((byte)MissionTimeSec);
-            headerBytesList.Add((byte)MissionTime100thOfSec);
+            headerBytesList.Add((byte)MissionState);
             headerBytesList.Add(PacketType);
 
             return headerBytesList.ToArray();
@@ -768,7 +768,7 @@ namespace CanSatGroundStation
                 parsedPacket.MissionTimeHour = missionTimeBytes[0];
                 parsedPacket.MissionTimeMin = missionTimeBytes[1];
                 parsedPacket.MissionTimeSec = missionTimeBytes[2];
-                parsedPacket.MissionTime100thOfSec = missionTimeBytes[3];
+                parsedPacket.MissionState = missionTimeBytes[3];
                
 
                 //Get the packet type from the packet Data

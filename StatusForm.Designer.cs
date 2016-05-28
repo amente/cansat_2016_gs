@@ -47,7 +47,7 @@
             this.panel2.ForeColor = System.Drawing.Color.GreenYellow;
             this.panel2.Location = new System.Drawing.Point(5, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(299, 162);
+            this.panel2.Size = new System.Drawing.Size(332, 162);
             this.panel2.TabIndex = 12;
             // 
             // lblMissionTime
@@ -88,15 +88,15 @@
             this.lblMissionState.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMissionState.Location = new System.Drawing.Point(165, 46);
             this.lblMissionState.Name = "lblMissionState";
-            this.lblMissionState.Size = new System.Drawing.Size(112, 20);
+            this.lblMissionState.Size = new System.Drawing.Size(146, 20);
             this.lblMissionState.TabIndex = 22;
-            this.lblMissionState.Text = "LAUNCH PAD";
+            this.lblMissionState.Text = "UNKNOWN STATE";
             // 
             // StatusForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(305, 172);
+            this.ClientSize = new System.Drawing.Size(340, 172);
             this.Controls.Add(this.panel2);
             this.Name = "StatusForm";
             this.Text = "CanSat Status ";
