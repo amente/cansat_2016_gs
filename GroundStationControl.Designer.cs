@@ -46,6 +46,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblPictureTransmissionTime = new System.Windows.Forms.Label();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.stsStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +60,8 @@
             // 
             this.stsStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblMissionTime,
-            this.lblState});
+            this.lblState,
+            this.toolStripProgressBar1});
             this.stsStatus.Location = new System.Drawing.Point(0, 606);
             this.stsStatus.Name = "stsStatus";
             this.stsStatus.Size = new System.Drawing.Size(858, 24);
@@ -78,8 +80,8 @@
             // lblState
             // 
             this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(36, 19);
-            this.lblState.Text = "State:";
+            this.lblState.Size = new System.Drawing.Size(115, 19);
+            this.lblState.Text = "Image Transmission:";
             // 
             // mnuMenu
             // 
@@ -204,6 +206,11 @@
             this.lblPictureTransmissionTime.TabIndex = 23;
             this.lblPictureTransmissionTime.Text = "0";
             // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 18);
+            // 
             // GroundStationControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,6 +264,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPictureTransmissionTime;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }
 

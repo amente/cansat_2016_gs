@@ -16,21 +16,12 @@ namespace CanSatGroundStation
             InitializeComponent();
         }
 
-        public void setPayloadDeployed(bool payloadDeployed)
-        {
-           
-        }
-
-        public void setUmbrellaDeployed(bool umbrellaDeployed)
-        {
-        }
-          
-          
-
-        public void setPayloadData(TelemetryPacket packet)
+        public void updateWithTelemetryPacket(TelemetryPacket telemetryPacket)
         {
             this.Invoke((MethodInvoker)delegate
             {
+                String missionTime = telemetryPacket.MissionTimeHour + ":" + telemetryPacket.MissionTimeMin + ":" + telemetryPacket.MissionTimeSec;
+                lblMissionTime.Text = missionTime;
                 /* TODO:
                 lblPayloadVolt.Text = packet.batVoltage.ToString();
                 lblPaloadAlt.Text = packet.altitude.ToString("F1");
@@ -38,19 +29,7 @@ namespace CanSatGroundStation
                 lblPayloadTime.Text = packet.missionTime.ToString(); */
 
             });
-           
-        }
-
-        public void setContainerData(TelemetryPacket packet)
-        {
-            this.Invoke((MethodInvoker)delegate
-            {
-                /* TODO:
-                setPayloadDeployed(packet.payloadDeployed);
-                setUmbrellaDeployed(packet.umbrellaDeployed); */
-
-            });            
-        }
+        }    
                
 
         private void StatusForm_FormClosing(object sender, FormClosingEventArgs e)

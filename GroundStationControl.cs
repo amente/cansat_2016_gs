@@ -76,6 +76,8 @@ namespace CanSatGroundStation
 
 
             telemetryChartsForm.updateChartsWithPacket(telemetryPacket);
+            statusForm.updateWithTelemetryPacket(telemetryPacket);
+
         }
 
         private void IncomingXBeePacketAvailable(XBeeIncomingPacket packet)
