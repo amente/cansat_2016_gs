@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lblMissionState = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblMissionTime = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblMissionState = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblPacketCount = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,6 +42,8 @@
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.MenuText;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.lblPacketCount);
+            this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.lblMissionState);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.lblMissionTime);
@@ -49,6 +53,27 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(332, 162);
             this.panel2.TabIndex = 12;
+            // 
+            // lblMissionState
+            // 
+            this.lblMissionState.AutoSize = true;
+            this.lblMissionState.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblMissionState.Location = new System.Drawing.Point(165, 72);
+            this.lblMissionState.Name = "lblMissionState";
+            this.lblMissionState.Size = new System.Drawing.Size(146, 20);
+            this.lblMissionState.TabIndex = 22;
+            this.lblMissionState.Text = "UNKNOWN STATE";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(20, 72);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(136, 20);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "MISSION STATE:";
             // 
             // lblMissionTime
             // 
@@ -71,26 +96,26 @@
             this.label13.TabIndex = 18;
             this.label13.Text = "MISSION TIME:";
             // 
-            // label1
+            // label2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(20, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(136, 20);
-            this.label1.TabIndex = 21;
-            this.label1.Text = "MISSION STATE:";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(20, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 20);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "PACKET COUNT:";
             // 
-            // lblMissionState
+            // lblPacketCount
             // 
-            this.lblMissionState.AutoSize = true;
-            this.lblMissionState.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMissionState.Location = new System.Drawing.Point(165, 46);
-            this.lblMissionState.Name = "lblMissionState";
-            this.lblMissionState.Size = new System.Drawing.Size(146, 20);
-            this.lblMissionState.TabIndex = 22;
-            this.lblMissionState.Text = "UNKNOWN STATE";
+            this.lblPacketCount.AutoSize = true;
+            this.lblPacketCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPacketCount.Location = new System.Drawing.Point(165, 41);
+            this.lblPacketCount.Name = "lblPacketCount";
+            this.lblPacketCount.Size = new System.Drawing.Size(18, 20);
+            this.lblPacketCount.TabIndex = 24;
+            this.lblPacketCount.Text = "0";
             // 
             // StatusForm
             // 
@@ -113,5 +138,7 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lblMissionState;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblPacketCount;
+        private System.Windows.Forms.Label label2;
     }
 }

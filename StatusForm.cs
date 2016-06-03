@@ -30,6 +30,9 @@ namespace CanSatGroundStation
             {
                 String missionTime = telemetryPacket.MissionTimeHour + ":" + telemetryPacket.MissionTimeMin + ":" + telemetryPacket.MissionTimeSec;
                 lblMissionTime.Text = missionTime;
+
+                String packetCount = telemetryPacket.PacketCount.ToString();
+                lblPacketCount.Text = packetCount;
                 
                 switch(telemetryPacket.MissionState)
                 {
