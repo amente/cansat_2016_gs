@@ -9,6 +9,8 @@ namespace CanSatGroundStation
     class CommandSender
     {
 
+        private byte COMMAND_PACKET_TYPE = 0xB0;
+
         private byte COMMAND_BYTE_TAKE_IMAGE = 0xC1;
         private byte COMMAND_BYTE_RESET_CAMERA = 0xC2;
 
@@ -32,7 +34,7 @@ namespace CanSatGroundStation
         public void sendTakePictureCommand()
         {
             XBeeOutgoingPacket commandPacket = new XBeeOutgoingPacket();
-            commandPacket.PacketData = new byte[] { COMMAND_BYTE_TAKE_IMAGE };
+            commandPacket.PacketData = new byte[] { COMMAND_PACKET_TYPE, COMMAND_BYTE_TAKE_IMAGE };
             Debug.WriteLine("Take picture command sent: " + BitConverter.ToString(commandPacket.toByteArray()));
             XBee.Instance.sendOutGoingPacket(commandPacket);
         }
@@ -40,7 +42,7 @@ namespace CanSatGroundStation
         public void sendResetCameraCommand()
         {
             XBeeOutgoingPacket commandPacket = new XBeeOutgoingPacket();
-            commandPacket.PacketData = new byte[] { COMMAND_BYTE_RESET_CAMERA };
+            commandPacket.PacketData = new byte[] { COMMAND_PACKET_TYPE, COMMAND_BYTE_RESET_CAMERA };
             Debug.WriteLine("Reset camera command sent: " + BitConverter.ToString(commandPacket.toByteArray()));
             XBee.Instance.sendOutGoingPacket(commandPacket);
         }
