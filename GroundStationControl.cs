@@ -96,7 +96,7 @@ namespace CanSatGroundStation
                 }
                 catch(Exception e)
                 {
-                    Debug.WriteLine("Image file is corrupted.");
+                    //Debug.WriteLine("Image file is corrupted.");
                 }
 
             });
