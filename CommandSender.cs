@@ -13,6 +13,7 @@ namespace CanSatGroundStation
 
         private byte COMMAND_BYTE_TAKE_IMAGE = 0xC1;
         private byte COMMAND_BYTE_RESET_CAMERA = 0xC2;
+        private byte COMMAND_BYTE_DEPLOY_PAYLOAD = 0xC3;
 
         private static volatile CommandSender commandSenderInstance;
 
@@ -46,6 +47,16 @@ namespace CanSatGroundStation
             Debug.WriteLine("Reset camera command sent: " + BitConverter.ToString(commandPacket.toByteArray()));
             XBee.Instance.sendOutGoingPacket(commandPacket);
         }
+
+        public void sendDeployPayloadCommand()
+        {
+            XBeeOutgoingPacket commandPacket = new XBeeOutgoingPacket();
+            commandPacket.PacketData = new byte[] { COMMAND_PACKET_TYPE, COMMAND_BYTE_DEPLOY_PAYLOAD };
+            Debug.WriteLine("Reset camera command sent: " + BitConverter.ToString(commandPacket.toByteArray()));
+            XBee.Instance.sendOutGoingPacket(commandPacket);
+        }
+
+       
 
     }
 }

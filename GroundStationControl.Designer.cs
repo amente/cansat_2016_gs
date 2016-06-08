@@ -33,6 +33,7 @@
             this.stsStatus = new System.Windows.Forms.StatusStrip();
             this.lblMissionTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblState = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.mnuMenu = new System.Windows.Forms.MenuStrip();
             this.btnTelemetry = new System.Windows.Forms.Button();
             this.btnGraphs = new System.Windows.Forms.Button();
@@ -46,7 +47,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lblPictureTransmissionTime = new System.Windows.Forms.Label();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.button3 = new System.Windows.Forms.Button();
             this.stsStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -82,6 +83,11 @@
             this.lblState.Name = "lblState";
             this.lblState.Size = new System.Drawing.Size(115, 19);
             this.lblState.Text = "Image Transmission:";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 18);
             // 
             // mnuMenu
             // 
@@ -206,10 +212,15 @@
             this.lblPictureTransmissionTime.TabIndex = 23;
             this.lblPictureTransmissionTime.Text = "0";
             // 
-            // toolStripProgressBar1
+            // button3
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 18);
+            this.button3.Location = new System.Drawing.Point(671, 213);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(119, 23);
+            this.button3.TabIndex = 25;
+            this.button3.Text = "Deploy Payload";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // GroundStationControl
             // 
@@ -217,6 +228,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(858, 630);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.lblPictureTransmissionTime);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
@@ -265,6 +277,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPictureTransmissionTime;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.Button button3;
     }
 }
 
