@@ -185,7 +185,12 @@ namespace CanSatGroundStation
 
         private void button3_Click(object sender, EventArgs e)
         {
-            CommandSender.Instance.sendDeployPayloadCommand();
+            CommandSender.Instance.sendActivateReleaseOneCommand();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            CommandSender.Instance.sendActivateReleaseTwoCommand();
         }
     }
 
